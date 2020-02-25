@@ -29,6 +29,7 @@ declare module './DialogflowAgent' {
     isFacebookMessengerBot(): boolean;
     isSlackBot(): boolean;
     isTwilioBot(): boolean;
+    isTrulienceBot(): boolean;
   }
 }
 declare module 'jovo-core/dist/src/Jovo' {
