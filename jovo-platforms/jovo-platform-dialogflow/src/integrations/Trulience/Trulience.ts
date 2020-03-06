@@ -1,13 +1,17 @@
 import { Plugin, BaseApp } from 'jovo-core';
-import _get = require('lodash.get');
 import { Config } from '../../DialogflowCore';
 import { Dialogflow } from '../../Dialogflow';
 import { DialogflowAgent } from '../../DialogflowAgent';
 import { TrulienceUser } from './TrulienceUser';
 
+export interface TrulienceConfig extends Config {
+  source: string;
+}
+
 export class Trulience implements Plugin {
-  config: Config = {
+  config: TrulienceConfig = {
     enabled: true,
+    source: 'Trulience',
   };
 
   constructor(config?: Config) {}
@@ -15,16 +19,15 @@ export class Trulience implements Plugin {
   install(dialogFlow: Dialogflow) {
     dialogFlow.middleware('$type')!.use(this.type.bind(this));
 
+    const source = this.config.source;
     DialogflowAgent.prototype.isTrulienceBot = function() {
-      return _get(this.$request, 'originalDetectIntentRequest.source') === 'Trulience';
+      return this.getSource() === source;
     };
   }
 
   uninstall(app: BaseApp) {}
 
   type(dialogflowAgent: DialogflowAgent) {
-    if (dialogflowAgent.isTrulienceBot()) {
-      dialogflowAgent.$user = new TrulienceUser(dialogflowAgent);
-    }
+    dialogflowAgent.$user = new TrulienceUser(dialogflowAgent);
   }
 }

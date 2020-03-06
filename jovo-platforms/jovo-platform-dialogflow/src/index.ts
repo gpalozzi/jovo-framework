@@ -14,6 +14,7 @@ export { DialogflowTestSuite } from './core/Interfaces';
 
 export { FacebookMessenger } from './integrations/FacebookMessenger/FacebookMessenger';
 export { Slack } from './integrations/Slack/Slack';
+export { Trulience } from './integrations/Trulience/Trulience';
 export { Twilio } from './integrations/Twilio/Twilio';
 export { DialogflowPlugin } from './integrations/DialogflowPlugin';
 
